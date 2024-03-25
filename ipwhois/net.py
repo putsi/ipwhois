@@ -69,7 +69,7 @@ except ImportError:  # pragma: no cover
 log = logging.getLogger(__name__)
 
 # POSSIBLY UPDATE TO USE RDAP
-ARIN = 'http://whois.arin.net/rest/nets;q={0}?showDetails=true&showARIN=true'
+ARIN = 'https://whois.arin.net/rest/nets;q={0}?showDetails=true&showARIN=true'
 
 CYMRU_WHOIS = 'whois.cymru.com'
 
@@ -220,7 +220,7 @@ class Net:
         try:
 
             log.debug('ASN query for {0}'.format(self.dns_zone))
-            data = self.dns_resolver.query(self.dns_zone, 'TXT')
+            data = self.dns_resolver.resolve(self.dns_zone, 'TXT')
             return list(data)
 
         except (dns.resolver.NXDOMAIN, dns.resolver.NoNameservers,
@@ -262,7 +262,7 @@ class Net:
         try:
 
             log.debug('ASN verbose query for {0}'.format(zone))
-            data = self.dns_resolver.query(zone, 'TXT')
+            data = self.dns_resolver.resolve(zone, 'TXT')
             return str(data[0])
 
         except (dns.resolver.NXDOMAIN, dns.resolver.NoNameservers,
